@@ -1,0 +1,51 @@
+% import x
+% userColor = x.generate_random_color()
+
+<div id="{{user['_key']}}" class="user">
+    <form id="user_{{user['_key']}}">
+        <!-- Icon displaying the first letter of the name and last name with random background color -->
+        <div id="nameIcon" style="background-color: {{userColor}};" class="user-icon">{{ user['name'][0] if user['name'] else '' }}{{ user['last_name'][0] if user['last_name'] else '' }}</div>
+        
+        <input name="user_name" value="{{user['name']}}" 
+        mix-check="{{x.USER_NAME_REGEX}}" mix-blur mix-put="/users/{{user['_key']}}" mix-data="#user_{{user['_key']}}"> 
+        
+        % last_name = user['last_name'] if 'last_name' in user else ''
+        <input name="user_last_name" value="{{last_name}}" 
+        mix-check="{{x.USER_LAST_NAME_REGEX}}" mix-blur mix-put="/users/{{user['_key']}}" mix-data="#user_{{user['_key']}}">         
+
+         % nick_name = user['nick_name'] if 'nick_name' in user else ''
+        <input name="nick_name" value="{{nick_name}}" 
+        mix-check="{{x.USER_NICK_NAME_REGEX}}" mix-blur mix-put="/users/{{user['_key']}}" mix-data="#user_{{user['_key']}}">   
+
+         % user_gender = user['user_gender'] if 'user_gender' in user else 'other'
+        <input name="user_gender" value="{{user_gender}}" 
+        mix-blur mix-put="/users/{{user['_key']}}" mix-data="#user_{{user['_key']}}">   
+
+        % gender_symbol = {'male': '♂', 'female': '♀', 'other': '⚧'}
+        % user_gender = user['user_gender'] if 'user_gender' in user else ''
+        <div>Gender: {{gender_symbol.get(user_gender, 'Unknown')}}</div>
+
+        <!-- % user_phone_nummers = user['user_phone_nummers'] if 'user_phone_nummers' in user else -->
+
+        % if 'phones' in user:
+    <div>Phone Numbers:</div>
+    <ul>
+    % for phone in user['phones']:
+        <li>{{ phone }}</li>
+    % end
+    </ul>
+% else:
+    <div>No phone numbers available.</div>
+% end
+        
+    </form>
+    
+    
+    <button
+        mix-delete="/users/{{user['_key']}}"
+        mix-default="Delete"
+        mix-await="Deleting..."
+    >
+        Delete
+    </button>
+</div>

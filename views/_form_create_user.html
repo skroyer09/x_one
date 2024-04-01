@@ -1,0 +1,54 @@
+% import x
+
+<form id="frm_user" autocomplete="off">
+    <div>
+        <label for="">
+            <span>name</span>
+            <span>{{x.USER_NAME_MIN}} to {{x.USER_NAME_MAX}}</span>
+        </label>
+        <input
+        mix-check="{{x.USER_NAME_REGEX}}" 
+        name="user_name" type="text"
+        >
+    </div>
+    <div>
+        <label for="">
+            <span>last name</span>
+            <span>{{x.USER_LAST_NAME_MIN}} to {{x.USER_LAST_NAME_MAX}}</span>
+        </label>            
+    <input
+        mix-check="{{x.USER_LAST_NAME_REGEX}}" 
+        name="user_last_name" type="text"
+    >   
+    </div> 
+    <div>
+        <label for="">
+            <span>username</span>
+            <span>{{x.USER_NICK_NAME_MIN}} to {{x.USER_NICK_NAME_MAX}}</span>
+        </label>            
+    <input
+        mix-check="{{x.USER_NICK_NAME_REGEX}}" 
+        name="nick_name" type="text"
+    >   
+    </div>         
+
+    <div>
+        <label for="">
+            <span>gender</span>
+        </label>
+        <select class="gender_btn" name="user_gender">
+            <option value="male">male</option>
+            <option value="female">female</option>
+            <option value="other">other</option>
+        </select>
+    </div>
+
+    <button
+        mix-post="/users"
+        mix-data="#frm_user"
+        mix-default="Create user"
+        mix-await="Please wait..."
+    >
+        Create
+    </button>
+</form>
